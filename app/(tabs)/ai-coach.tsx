@@ -1,25 +1,25 @@
 // app/(tabs)/ai-coach.tsx
 import { colors, radius, spacing } from "@/constants/theme";
 import {
-    calculateBMI,
-    calculateTDEE,
-    getBMICategory,
-    useApp,
+  calculateBMI,
+  calculateTDEE,
+  getBMICategory,
+  useApp,
 } from "@/context/AppContext";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 // ─── TYPES ────────────────────────────────────────────────
@@ -79,6 +79,60 @@ const QUICK_PROMPTS: QuickPrompt[] = [
       "What specific steps should I take to improve my BMI and reach a healthier weight?",
   },
 ];
+
+// ─── GROQ API ─────────────────────────────────────────────
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+async function callGroq(
+  messages: Message[],
+  systemPrompt: string,
+  apiKey: string,
+): Promise<string> {
+  // Groq uses OpenAI-compatible format
+  // Much simpler than Gemini's format
+  const response = await fetch(GROQ_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+      // Bearer token auth — standard for most AI APIs
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      // fast, free, capable model
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt,
+          // Groq/OpenAI format uses a proper
+          // system role — cleaner than Gemini
+        },
+        // Map our messages to Groq format
+        ...messages.map((msg) => ({
+          role: msg.role === "user" ? "user" : "assistant",
+          content: msg.text,
+        })),
+      ],
+      max_tokens: 500,
+      temperature: 0.7,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err?.error?.message || "Groq API error");
+  }
+
+  const data = await response.json();
+
+  // Groq/OpenAI response format:
+  // data.choices[0].message.content
+  // Much simpler than Gemini's nested structure
+  const text = data?.choices?.[0]?.message?.content;
+  if (!text) throw new Error("Empty response from Groq");
+
+  return text;
+}
 
 // ─── GEMINI API ───────────────────────────────────────────
 
@@ -256,7 +310,8 @@ export default function AICoachScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
   // Get API key from .env
-  const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY ?? "";
+  // const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY ?? "";
+  const apiKey = process.env.EXPO_PUBLIC_GROQ_API_KEY ?? "";
 
   // ── Auto scroll to bottom when new message arrives ──
   useEffect(() => {
@@ -373,7 +428,7 @@ Daily deficit/surplus: ${deficit > 0 ? `-${deficit}` : `+${Math.abs(deficit)}`} 
 
     try {
       const systemPrompt = buildSystemPrompt();
-      const reply = await callGemini(updatedMessages, systemPrompt, apiKey);
+      const reply = await callGroq(updatedMessages, systemPrompt, apiKey);
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -415,7 +470,7 @@ Daily deficit/surplus: ${deficit > 0 ? `-${deficit}` : `+${Math.abs(deficit)}`} 
           </View>
           <View>
             <Text style={styles.headerTitle}>AI Coach</Text>
-            <Text style={styles.headerSubtitle}>Powered by Google Gemini</Text>
+            <Text style={styles.headerSubtitle}>Powered by Groq + Llama 3</Text>
           </View>
         </View>
 

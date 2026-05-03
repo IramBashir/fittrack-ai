@@ -8,6 +8,10 @@
     "scheme": "fittractainew",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#FAF7F5"
+    },
     "ios": {
       "supportsTablet": true
     },
