@@ -222,7 +222,7 @@ multiplier for TDEE estimation.
 MSCS Student @ FAST NUCES Islamabad
 Cybersecurity Minor | Software Engineer
 
-- [LinkedIn](https://www.linkedin.com/in/irambashir/)
+- [LinkedIn](https://www.linkedin.com/in/iirambashir)
 - [GitHub](https://github.com/IramBashir)
 - 📧 → irambashir.dev@gmail.com
 
