@@ -17,15 +17,35 @@ _A full-stack mobile app built with React Native + Expo_
 
 ## 📱 Screenshots
 
-<!-- Add your screenshots here after taking them -->
+### Onboarding
 
-| Onboarding                        | Dashboard                        | AI Coach                        | Progress                        |
-| --------------------------------- | -------------------------------- | ------------------------------- | ------------------------------- |
-| ![](./screenshots/onboarding.png) | ![](./screenshots/dashboard.png) | ![](./screenshots/ai-coach.png) | ![](./screenshots/progress.png) |
+| Welcome & Personal Info              | Body Measurements                    | Goals Setup                          |
+| ------------------------------------ | ------------------------------------ | ------------------------------------ |
+| ![](./screenshots/onboarding-1.jpeg) | ![](./screenshots/onboarding-2.jpeg) | ![](./screenshots/onboarding-3.jpeg) |
 
-| Add Meal                        | Profile                        | Water Tracker                | Badges                        |
-| ------------------------------- | ------------------------------ | ---------------------------- | ----------------------------- |
-| ![](./screenshots/add-meal.png) | ![](./screenshots/profile.png) | ![](./screenshots/water.png) | ![](./screenshots/badges.png) |
+### Dashboard
+
+| Home — Calorie Ring & Macros          | Home — Water & Steps                     |
+| ------------------------------------- | ---------------------------------------- |
+| ![](./screenshots/dashboard-top.jpeg) | ![](./screenshots/dashboard-bottom.jpeg) |
+
+### Meal Logging
+
+| Food Search & Browse                    | Food Selected                             |
+| --------------------------------------- | ----------------------------------------- |
+| ![](./screenshots/add-meal-search.jpeg) | ![](./screenshots/add-meal-selected.jpeg) |
+
+### Progress & Profile
+
+| Progress & Charts                | Profile & BMI                   |
+| -------------------------------- | ------------------------------- |
+| ![](./screenshots/progress.jpeg) | ![](./screenshots/profile.jpeg) |
+
+### AI Coach
+
+| Chat with AI Coach               |
+| -------------------------------- |
+| ![](./screenshots/ai-coach.jpeg) |
 
 ---
 
@@ -136,33 +156,36 @@ EXPO_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
+```
 fittrack-ai/
-├── app/ # Screens (Expo Router)
-│ ├── (tabs)/
-│ │ ├── \_layout.tsx # Tab bar configuration
-│ │ ├── index.tsx # Dashboard screen
-│ │ ├── progress.tsx # Progress & charts
-│ │ ├── ai-coach.tsx # AI chat screen
-│ │ └── profile.tsx # Profile & settings
-│ ├── \_layout.tsx # Root layout
-│ ├── index.tsx # Entry + redirect logic
-│ ├── onboarding.tsx # First launch setup
-│ └── add-meal.tsx # Add meal modal
+├── app/
+│   ├── (tabs)/
+│   │   ├── _layout.tsx
+│   │   ├── index.tsx
+│   │   ├── progress.tsx
+│   │   ├── ai-coach.tsx
+│   │   └── profile.tsx
+│   ├── _layout.tsx
+│   ├── index.tsx
+│   ├── onboarding.tsx
+│   └── add-meal.tsx
 ├── components/
-│ ├── Card.tsx # Reusable card component
-│ ├── CalorieRing.tsx # SVG progress ring
-│ ├── MealItem.tsx # Meal list row
-│ ├── WaterTracker.tsx # Water intake widget
-│ └── StepsTracker.tsx # Steps widget
+│   ├── Card.tsx
+│   ├── CalorieRing.tsx
+│   ├── MealItem.tsx
+│   ├── WaterTracker.tsx
+│   └── StepsTracker.tsx
 ├── context/
-│ └── AppContext.tsx # Global state + AsyncStorage
+│   └── AppContext.tsx
 ├── constants/
-│ ├── theme.ts # Design tokens
-│ └── pakistaniFoods.ts # 80+ foods database
-├── .env.example # Environment template
+│   ├── theme.ts
+│   └── pakistaniFoods.ts
+├── screenshots/
+├── .env.example
 └── README.md
+```
 
 ---
 
