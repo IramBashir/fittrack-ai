@@ -1,50 +1,216 @@
-# Welcome to your Expo app 👋
+<div align="center">
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# FitTrack AI
 
-## Get started
+### AI-Powered Fitness & Nutrition Tracker
 
-1. Install dependencies
+_A full-stack mobile app built with React Native + Expo_
 
-   ```bash
-   npm install
-   ```
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)
 
-2. Start the app
+</div>
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 📱 Screenshots
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<!-- Add your screenshots here after taking them -->
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| Onboarding                        | Dashboard                        | AI Coach                        | Progress                        |
+| --------------------------------- | -------------------------------- | ------------------------------- | ------------------------------- |
+| ![](./screenshots/onboarding.png) | ![](./screenshots/dashboard.png) | ![](./screenshots/ai-coach.png) | ![](./screenshots/progress.png) |
 
-## Get a fresh project
+| Add Meal                        | Profile                        | Water Tracker                | Badges                        |
+| ------------------------------- | ------------------------------ | ---------------------------- | ----------------------------- |
+| ![](./screenshots/add-meal.png) | ![](./screenshots/profile.png) | ![](./screenshots/water.png) | ![](./screenshots/badges.png) |
 
-When you're ready, run:
+---
+
+## Features
+
+### Dashboard
+
+- Animated SVG calorie progress ring
+- Real-time macro tracking (protein, carbs, fat)
+- Daily streak badge with color progression
+- Recovery mode — smart tip when calorie goal exceeded
+- Water intake tracker with visual glass indicators
+- Steps tracker with distance + calorie burn estimates
+
+### Meal Logging
+
+- Search from 80+ Pakistani foods database with accurate calories
+- Browse by category (Roti, Rice, Dal, Chicken, Snacks, etc.)
+- Manual entry for custom foods
+- Macronutrient breakdown per food item
+- Quick category tagging (Breakfast / Lunch / Dinner / Snack)
+
+### AI Coach (Powered by Google Gemini)
+
+- Personalized advice using your real health data
+- Quick prompts: meal suggestions, weekly analysis, meal plans
+- Full conversation history within session
+- Context-aware — AI knows your BMI, calories, streak, meals
+
+### Progress Tracking
+
+- 7-day weight trend chart (custom SVG, no library)
+- Weekly calorie bar chart with goal comparison
+- Consistency percentage and average calorie stats
+- Smart AI insights about eating patterns
+
+### Profile & Body Stats
+
+- BMI calculator with color-coded health category
+- TDEE (Total Daily Energy Expenditure) calculator
+- Calorie deficit/surplus analysis with weekly projection
+- Mifflin-St Jeor BMR formula for accuracy
+- Achievement badges (On Fire, Week Win, Consistent, Dedicated)
+- Editable goals — calories, water, steps
+
+### Data Persistence
+
+- Full offline support via AsyncStorage
+- Data survives app close and reopen
+- Automatic daily reset at midnight
+- Streak calculation based on previous day's performance
+
+---
+
+## Tech Stack
+
+| Category         | Technology                                     |
+| ---------------- | ---------------------------------------------- |
+| Framework        | React Native 0.74 + Expo SDK 51                |
+| Language         | TypeScript                                     |
+| Navigation       | Expo Router v3 (file-based routing)            |
+| State Management | React Context + useReducer                     |
+| Storage          | AsyncStorage (offline-first)                   |
+| AI Integration   | Google Gemini API (gemini-3.1-flash-lite)      |
+| Charts           | react-native-svg (custom, no charting library) |
+| Icons            | @expo/vector-icons (Ionicons)                  |
+| Date Handling    | Day.js                                         |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- Expo Go app on your phone
+  ([iOS](https://apps.apple.com/app/expo-go/id982107779) /
+  [Android](https://play.google.com/store/apps/details?id=host.exp.exponent))
+- Free Google Gemini API key
+  ([Get one here](https://aistudio.google.com))
+
+### Installation
 
 ```bash
-npm run reset-project
+# Clone the repository
+git clone https://github.com/IramBashir/fittrack-ai.git
+cd fittrack-ai
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Add your Gemini API key to .env
+
+# Start the development server
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Scan the QR code with Expo Go on your phone.
 
-## Learn more
+### Environment Variables
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+# .env
+EXPO_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 📁 Project Structure
 
-Join our community of developers creating universal apps.
+fittrack-ai/
+├── app/ # Screens (Expo Router)
+│ ├── (tabs)/
+│ │ ├── \_layout.tsx # Tab bar configuration
+│ │ ├── index.tsx # Dashboard screen
+│ │ ├── progress.tsx # Progress & charts
+│ │ ├── ai-coach.tsx # AI chat screen
+│ │ └── profile.tsx # Profile & settings
+│ ├── \_layout.tsx # Root layout
+│ ├── index.tsx # Entry + redirect logic
+│ ├── onboarding.tsx # First launch setup
+│ └── add-meal.tsx # Add meal modal
+├── components/
+│ ├── Card.tsx # Reusable card component
+│ ├── CalorieRing.tsx # SVG progress ring
+│ ├── MealItem.tsx # Meal list row
+│ ├── WaterTracker.tsx # Water intake widget
+│ └── StepsTracker.tsx # Steps widget
+├── context/
+│ └── AppContext.tsx # Global state + AsyncStorage
+├── constants/
+│ ├── theme.ts # Design tokens
+│ └── pakistaniFoods.ts # 80+ foods database
+├── .env.example # Environment template
+└── README.md
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## Technical Highlights
+
+**Custom SVG Charts** — Built weight trend and calorie
+bar charts from scratch using react-native-svg without
+any charting library. Handles dynamic scaling, gradient
+fills, and axis labels.
+
+**AI Context Injection** — Before every Gemini API call,
+the app injects the user's real health data (BMI, calories,
+meals, streak) into the system prompt. This makes responses
+genuinely personalized rather than generic.
+
+**Offline-First Architecture** — All data persists via
+AsyncStorage with parallel read/write using Promise.all.
+The app works fully offline — AI is the only feature
+requiring internet.
+
+**Automatic Daily Reset** — App compares today's date
+with last opened date on every launch. If it's a new day,
+daily trackers reset and streak is evaluated based on
+yesterday's calorie performance.
+
+**BMR/TDEE Calculation** — Implements the Mifflin-St Jeor
+formula (most clinically accurate for general use) to
+calculate basal metabolic rate, then applies an activity
+multiplier for TDEE estimation.
+
+## About The Developer
+
+**Iram Bashir**
+MSCS Student @ FAST NUCES Islamabad
+Cybersecurity Minor | Software Engineer
+
+- [LinkedIn](https://www.linkedin.com/in/irambashir/)
+- [GitHub](https://github.com/IramBashir)
+- 📧 → irambashir.dev@gmail.com
+
+---
+
+## License
+
+MIT License — feel free to fork and build on this!
+
+---
+
+<div align="center">
+  <i>Built with Love in Islamabad, Pakistan</i>
+</div>
