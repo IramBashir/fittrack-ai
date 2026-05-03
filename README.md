@@ -9,7 +9,7 @@ _A full-stack mobile app built with React Native + Expo_
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Groq AI](https://img.shields.io/badge/Groq_AI-F55036?style=for-the-badge&logo=groq&logoColor=white)
 
 </div>
 
@@ -68,7 +68,7 @@ _A full-stack mobile app built with React Native + Expo_
 - Macronutrient breakdown per food item
 - Quick category tagging (Breakfast / Lunch / Dinner / Snack)
 
-### AI Coach (Powered by Google Gemini)
+### AI Coach (Powered by Groq + Llama 3)
 
 - Personalized advice using your real health data
 - Quick prompts: meal suggestions, weekly analysis, meal plans
@@ -109,7 +109,7 @@ _A full-stack mobile app built with React Native + Expo_
 | Navigation       | Expo Router v3 (file-based routing)            |
 | State Management | React Context + useReducer                     |
 | Storage          | AsyncStorage (offline-first)                   |
-| AI Integration   | Google Gemini API (gemini-3.1-flash-lite)      |
+| AI Integration   | Groq API — Llama 3.1 8B Instant                |
 | Charts           | react-native-svg (custom, no charting library) |
 | Icons            | @expo/vector-icons (Ionicons)                  |
 | Date Handling    | Day.js                                         |
@@ -124,8 +124,8 @@ _A full-stack mobile app built with React Native + Expo_
 - Expo Go app on your phone
   ([iOS](https://apps.apple.com/app/expo-go/id982107779) /
   [Android](https://play.google.com/store/apps/details?id=host.exp.exponent))
-- Free Google Gemini API key
-  ([Get one here](https://aistudio.google.com))
+- Free Groq API key
+  ([Get one here](https://console.groq.com))
 
 ### Installation
 
@@ -139,7 +139,7 @@ npm install
 
 # Set up environment variables
 cp .env.example .env
-# Add your Gemini API key to .env
+# Add your Groq API key to .env
 
 # Start the development server
 npx expo start
@@ -200,7 +200,7 @@ bar charts from scratch using react-native-svg without
 any charting library. Handles dynamic scaling, gradient
 fills, and axis labels.
 
-**AI Context Injection** — Before every Gemini API call,
+**AI Context Injection** — Before every Groq API call,
 the app injects the user's real health data (BMI, calories,
 meals, streak) into the system prompt. This makes responses
 genuinely personalized rather than generic.

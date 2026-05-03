@@ -88,8 +88,6 @@ async function callGroq(
   systemPrompt: string,
   apiKey: string,
 ): Promise<string> {
-  // Groq uses OpenAI-compatible format
-  // Much simpler than Gemini's format
   const response = await fetch(GROQ_API_URL, {
     method: "POST",
     headers: {
@@ -104,8 +102,6 @@ async function callGroq(
         {
           role: "system",
           content: systemPrompt,
-          // Groq/OpenAI format uses a proper
-          // system role — cleaner than Gemini
         },
         // Map our messages to Groq format
         ...messages.map((msg) => ({
@@ -124,81 +120,8 @@ async function callGroq(
   }
 
   const data = await response.json();
-
-  // Groq/OpenAI response format:
-  // data.choices[0].message.content
-  // Much simpler than Gemini's nested structure
   const text = data?.choices?.[0]?.message?.content;
   if (!text) throw new Error("Empty response from Groq");
-
-  return text;
-}
-
-// ─── GEMINI API ───────────────────────────────────────────
-
-const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent";
-
-async function callGemini(
-  messages: Message[],
-  systemPrompt: string,
-  apiKey: string,
-): Promise<string> {
-  // Gemini uses a "contents" array format
-  // Each message has a role and parts array
-  // System prompt goes as first user message + model acknowledgment
-  // This is Gemini's way of handling system prompts
-
-  const contents = [
-    // System context as first exchange
-    {
-      role: "user",
-      parts: [{ text: systemPrompt }],
-    },
-    {
-      role: "model",
-      parts: [
-        {
-          text: "Understood. I am your personal AI fitness coach with full context of your health data. How can I help you today?",
-        },
-      ],
-    },
-    // Actual conversation history
-    ...messages.map((msg) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.text }],
-    })),
-  ];
-
-  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents,
-      generationConfig: {
-        temperature: 0.7,
-        // temperature controls creativity
-        // 0 = very factual/repetitive
-        // 1 = more creative/varied
-        // 0.7 = good balance for health advice
-        maxOutputTokens: 600,
-        // keeps responses concise for mobile
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err?.error?.message || "Gemini API error");
-  }
-
-  const data = await response.json();
-
-  // Navigate the Gemini response structure
-  // data.candidates[0].content.parts[0].text
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-  if (!text) throw new Error("Empty response from Gemini");
 
   return text;
 }
@@ -310,7 +233,6 @@ export default function AICoachScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
   // Get API key from .env
-  // const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY ?? "";
   const apiKey = process.env.EXPO_PUBLIC_GROQ_API_KEY ?? "";
 
   // ── Auto scroll to bottom when new message arrives ──
@@ -408,7 +330,7 @@ Daily deficit/surplus: ${deficit > 0 ? `-${deficit}` : `+${Math.abs(deficit)}`} 
     if (!apiKey) {
       Alert.alert(
         "API Key Missing",
-        "Add EXPO_PUBLIC_GEMINI_API_KEY to your .env file.",
+        "Add EXPO_PUBLIC_GROQ_API_KEY= to your .env file.",
       );
       return;
     }
@@ -448,7 +370,7 @@ Daily deficit/surplus: ${deficit > 0 ? `-${deficit}` : `+${Math.abs(deficit)}`} 
         timestamp: dayjs().format("HH:mm"),
       };
       setMessages((prev) => [...prev, errorMessage]);
-      console.error("Gemini error:", error.message);
+      console.error("Groq error:", error.message);
     } finally {
       setIsLoading(false);
     }
