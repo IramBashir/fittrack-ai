@@ -43,9 +43,9 @@ _A full-stack mobile app built with React Native + Expo_
 
 ### AI Coach
 
-| Chat with AI Coach               |
-| -------------------------------- |
-| ![](./screenshots/ai-coach.jpeg) |
+| AI Coach — Quick Prompts           | AI Coach — Conversation            |
+| ---------------------------------- | ---------------------------------- |
+| ![](./screenshots/ai-coach-1.jpeg) | ![](./screenshots/ai-coach-2.jpeg) |
 
 ---
 
@@ -151,8 +151,12 @@ Scan the QR code with Expo Go on your phone.
 
 ```bash
 # .env
-EXPO_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+EXPO_PUBLIC_GROQ_API_KEY=your_groq_api_key_here
 ```
+
+Get your free Groq API key at
+[console.groq.com](https://console.groq.com) —
+no credit card required.
 
 ---
 
